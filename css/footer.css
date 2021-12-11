@@ -4,8 +4,12 @@
     height: 70px;
     display: flex;
     justify-content: space-between;
-    padding-left: 100px;
-    padding-right: 100px;
+}
+
+.container.footer {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .footer__name,
