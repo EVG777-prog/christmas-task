@@ -13,17 +13,20 @@ body {
     font-family: 'Neucha';
 }
 
-.home-page {
+.main {
     width: 100vw;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 140px);
     background-image: url("/assets/bg.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     margin-left: auto;
     margin-right: auto;
-    padding-top: 200px;
     position: relative;
+}
+
+.home-page {
+    padding-top: 100px;
 }
 
 .home-page__text {
