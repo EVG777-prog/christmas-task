@@ -39,14 +39,13 @@ const settingFilters: Filters = {
 // const sortMetod = document.querySelector('#sort-metod');
 
 
-function renderFilters(obj: Filters): void {
 
-}
 
 
 export { Filters, settingFilters };
 
 console.log(`
 Доброго времени суток!
-Пока не работает сортировка, фильтры и поиск, если получится, проверте попозже, заранее благодарен!
+Фильтры пока работают только по форме, количеству и году.
+Пока не работает сортировка, частично фильтры и поиск, если получится, проверте попозже, заранее благодарен!
 `)

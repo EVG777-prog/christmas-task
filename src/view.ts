@@ -2,6 +2,7 @@ import { homePageHTML } from "./pages/home";
 import { selectPageHTML } from "./pages/select";
 import { Filters, settingFilters } from "./index";
 import { data, DataToy } from "./data";
+import { Module } from "./module";
 
 import * as noUiSlider from 'nouislider';
 import 'nouislider/dist/nouislider.css';
@@ -38,7 +39,9 @@ class View {
 
       if (sliderCount.noUiSlider) {
         sliderCount.noUiSlider.on('update', (el) => {
-          console.log(el);
+          settingFilters.count = [+el[0], +el[1]];
+
+          showToys(Module.filterAll());
           document.querySelector('.select__count .select__text.start')!.textContent = `${Math.round(+el[0])}`;
           document.querySelector('.select__count .select__text.end')!.textContent = `${Math.round(+el[1])}`;
 
@@ -58,7 +61,9 @@ class View {
 
       if (sliderYear.noUiSlider) {
         sliderYear.noUiSlider.on('update', (el) => {
-          // console.log(el);
+          settingFilters.year = [+el[0], +el[1]];
+          showToys(Module.filterAll());
+
           document.querySelector('.select__year .select__text.start')!.textContent = `${Math.round(+el[0])}`;
           document.querySelector('.select__year .select__text.end')!.textContent = `${Math.round(+el[1])}`;
 
@@ -71,7 +76,7 @@ class View {
     forms.forEach((el: Element) => {
       // console.log(el);
       el.addEventListener('click', (ev: Event) => {
-        // console.log('XXX');
+        console.log('XXX');
         const target = ev.target as HTMLElement & { dataset: Record<string, string> };
         const { form } = target.dataset;
         target.classList.toggle('active');
@@ -80,6 +85,9 @@ class View {
         if (form === 'cone') settingFilters.form['cone'] = settingFilters.form['cone'] ? false : true;
         if (form === 'star') settingFilters.form['star'] = settingFilters.form['star'] ? false : true;
         if (form === 'figure') settingFilters.form['figure'] = settingFilters.form['figure'] ? false : true;
+        console.log(form);
+        console.log(settingFilters.form);
+        showToys(Module.filterAll());
       });
     });
 

@@ -12,11 +12,11 @@ const selectPageHTML: string = `
     </div>
     <div class="container select__form">
         <p>Форма:</p>
-        <div class="form ball active"></div>
-        <div class="form bell"></div>
-        <div class="form cone"></div>
-        <div class="form star"></div>
-        <div class="form figure"></div>
+        <div class="form ball active" data-form="ball"></div>
+        <div class="form bell" data-form="bell"></div>
+        <div class="form cone" data-form="cone"></div>
+        <div class="form star" data-form="star"></div>
+        <div class="form figure" data-form="figure"></div>
     </div>
     <div class="container select__color">
         <p>Цвет:</p>

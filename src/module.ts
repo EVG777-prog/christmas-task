@@ -1,6 +1,6 @@
 import { Filters, settingFilters } from "./index";
 
-import { DataToy } from "./data";
+import { data, DataToy } from "./data";
 
 class Module {
 
@@ -10,19 +10,38 @@ class Module {
     this.data = data;
   }
 
-  filterCount(data: Array<DataToy>, numStart: number, numEnd: number): Array<DataToy> {
+  static filterAll(): Array<DataToy> {
+    let result: DataToy[] = data;
+
+    result = this.filterCount(result, settingFilters.count);
+    result = this.filterYear(result, settingFilters.year);
+    result = this.filterShape(result);
+
+    return result;
+  }
+
+
+  static filterCount(data: Array<DataToy>, count: number[]): Array<DataToy> {
+    const numStart: number = count[0];
+    const numEnd: number = count[1];
+
+    const result: DataToy[] = data.filter((el: DataToy) => {
+      return (+el.count >= numStart) && (+el.count <= numEnd);
+    });
+
+    return result;
+  }
+
+  static filterYear(data: Array<DataToy>, year: number[]): Array<DataToy> {
+    const yearStart: number = year[0];
+    const yearEnd: number = year[1];
+
     return data.filter((el: DataToy) => {
-      +el.count >= numStart && +el.count <= numEnd;
+      return (+el.year >= yearStart) && (+el.year <= yearEnd);
     });
   }
 
-  filterYear(data: Array<DataToy>, yearStart: number, yearEnd: number): Array<DataToy> {
-    return data.filter((el: DataToy) => {
-      +el.year >= yearStart && +el.year <= yearEnd;
-    });
-  }
-
-  filterShape(data: Array<DataToy>,): Array<DataToy> {
+  static filterShape(data: Array<DataToy>): Array<DataToy> {
 
     let result: DataToy[] = [];
 
@@ -42,6 +61,7 @@ class Module {
 
     return result;
   }
+
 
 }
 
