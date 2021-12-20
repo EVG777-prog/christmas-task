@@ -1,4 +1,4 @@
-const selectPage = `
+const selectPageHTML: string = `
 <div class="container select">
 <div class="select__setting">
     <div class="container select__sort">
@@ -96,3 +96,5 @@ const selectPage = `
 </div>
 </div>
 `;
+
+export { selectPageHTML };
