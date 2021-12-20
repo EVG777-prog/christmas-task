@@ -58,7 +58,7 @@ class View {
 
       if (sliderYear.noUiSlider) {
         sliderYear.noUiSlider.on('update', (el) => {
-          console.log(el);
+          // console.log(el);
           document.querySelector('.select__year .select__text.start')!.textContent = `${Math.round(+el[0])}`;
           document.querySelector('.select__year .select__text.end')!.textContent = `${Math.round(+el[1])}`;
 
@@ -69,9 +69,9 @@ class View {
     const forms = document.querySelectorAll('.select__form .form');
 
     forms.forEach((el: Element) => {
-      console.log(el);
+      // console.log(el);
       el.addEventListener('click', (ev: Event) => {
-        console.log('XXX');
+        // console.log('XXX');
         const target = ev.target as HTMLElement & { dataset: Record<string, string> };
         const { form } = target.dataset;
         target.classList.toggle('active');
