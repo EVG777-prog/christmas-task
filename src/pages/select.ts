@@ -4,15 +4,15 @@ const selectPageHTML: string = `
     <div class="container select__sort">
         <p>Сортировка</p>
         <select name="select__sort-metod" id="sort-metod">
-        <option value="a-to-z">По названию от "А" до "Я"</option>
-        <option value="z-to-a">По названию от "Я" до "А"</option>
-        <option value="count-to-bigger">По количеству по возрастанию</option>
-        <option value="count-to-smaller">По количеству по убыванию</option>
+        <option value="name-up">По названию от "А" до "Я"</option>
+        <option value="name-down">По названию от "Я" до "А"</option>
+        <option value="count-up">По количеству по возрастанию</option>
+        <option value="count-down">По количеству по убыванию</option>
     </select>
     </div>
     <div class="container select__form">
         <p>Форма:</p>
-        <div class="form ball active" data-form="ball"></div>
+        <div class="form ball" data-form="ball"></div>
         <div class="form bell" data-form="bell"></div>
         <div class="form cone" data-form="cone"></div>
         <div class="form star" data-form="star"></div>
@@ -20,17 +20,17 @@ const selectPageHTML: string = `
     </div>
     <div class="container select__color">
         <p>Цвет:</p>
-        <div class="color white"></div>
-        <div class="color yellow active"></div>
-        <div class="color red"></div>
-        <div class="color blue"></div>
-        <div class="color green"></div>
+        <div class="color white" data-color="white"></div>
+        <div class="color yellow" data-color="yellow"></div>
+        <div class="color red" data-color="red"></div>
+        <div class="color blue" data-color="blue"></div>
+        <div class="color green" data-color="green"></div>
     </div>
     <div class="container select__size">
         <p>Размер:</p>
-        <div class="size big active"></div>
-        <div class="size medium"></div>
-        <div class="size small"></div>
+        <div class="size big" data-size="big"></div>
+        <div class="size medium" data-size="medium"></div>
+        <div class="size small" data-size="small"></div>
     </div>
     <div class="container select__favorite">
         <p>Только любимые:</p>

@@ -252,6 +252,7 @@
     /* border: 1px solid red; */
     height: 50px;
     padding-top: 10px;
+    margin-bottom: 20px;
 }
 
 .select__card-img {
@@ -267,7 +268,7 @@
 
 .select__card-text {
     width: 180px;
-    font-size: 25px;
+    font-size: 23px;
     color: #FFFFFF;
     line-height: 1.5;
 }
