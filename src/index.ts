@@ -28,4 +28,5 @@ document.querySelector('.header__search')?.addEventListener('input', (el) => {
 
 console.log(`
 Доброго времени суток!
+Дополнительного функционала нет.
 `)
