@@ -137,7 +137,9 @@ class View {
     };
 
     document.querySelector('.select__reset')?.addEventListener('click', (el) => {
+      const sort = Setting.filters.sort;
       Setting.filters = Setting.filtersDefault;
+      Setting.filters.sort = sort;
       View.renderSelectPage();
     })
 
@@ -151,7 +153,34 @@ class View {
 
     this.showToys(Module.filterAll());
 
+    document.querySelector('.select__toys')?.addEventListener('click', (el) => {
 
+      const target = el as Event & { path: HTMLElement[] };
+      target.path.forEach((el) => {
+        if (el.classList?.contains('select__card')) {
+          const { num } = el.dataset;
+          console.log(num);
+          // Module.selected.push(el.dataset);
+          if (num) {
+            if (Module.selected.includes(num)) {
+              Module.selected.splice(Module.selected.indexOf(num), 1);
+              el.classList?.remove('active');
+            } else if (Module.selected.length <= 19) {
+              Module.selected.push(num);
+              el.classList?.add('active');
+            }
+          }
+
+          if (document.querySelector('.header__count-toys')) document.querySelector('.header__count-toys')!.textContent = String(Module.selected.length);
+
+
+        }
+
+      })
+      console.log(Module.selected);
+
+      // Module.selected.push(+num);
+    })
   }
 
   static showToys(data: DataToy[]): void {
@@ -161,7 +190,7 @@ class View {
       container.innerHTML = '';
       data.forEach((el: DataToy) => {
         container.innerHTML += `
-        <div class="select__card">
+        <div class="select__card${Module.selected.includes(el.num) ? ' active' : ''}" data-num="${el.num}">
           <div class="select__card-name">${el.name}</div>
               <div class="container">
                  <div class="select__card-img">

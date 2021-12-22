@@ -3,7 +3,7 @@ import { Setting } from "./setting";
 import { data, DataToy } from "./data";
 
 class Module {
-
+  static selected: string[] = [];
   data: Array<DataToy>;
 
   constructor(data: Array<DataToy>) {
@@ -26,7 +26,7 @@ class Module {
   }
 
   static searchNameToys(name: string): Array<DataToy> {
-    let result: DataToy[] = data.filter((el: DataToy) => el.name.includes(name));
+    let result: DataToy[] = data.filter((el: DataToy) => el.name.toLowerCase().includes(name.toLowerCase()));
     return result;
   }
 
