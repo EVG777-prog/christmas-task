@@ -27,5 +27,4 @@ document.querySelector('.header__search')?.addEventListener('input', (el) => {
 
 console.log(`
 Доброго времени суток!
-Пока не работает LocalStorage, если получится, проверте попозже, заранее благодарен!
 `)
