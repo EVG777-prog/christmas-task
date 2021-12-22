@@ -33,15 +33,7 @@ class Setting {
   }
 }
 
-const settingFilters: Filters = {
-  sort: 'name-up',
-  form: { 'ball': false, 'bell': false, 'cone': false, 'star': false, 'figure': false },
-  color: { 'white': false, 'yellow': false, 'red': false, 'blue': false, 'green': false },
-  size: { 'big': false, 'medium': false, 'small': false },
-  favorite: false,
-  count: [1, 12],
-  year: [1940, 2020],
-}
+
 
 
 export { Filters, Setting };
