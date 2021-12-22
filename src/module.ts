@@ -26,7 +26,7 @@ class Module {
   }
 
   static searchNameToys(name: string): Array<DataToy> {
-    let result: DataToy[] = data.filter((el: DataToy) => el.name.toLowerCase().includes(name.toLowerCase()));
+    let result: DataToy[] = Module.filterAll().filter((el: DataToy) => el.name.toLowerCase().includes(name.toLowerCase()));
     return result;
   }
 

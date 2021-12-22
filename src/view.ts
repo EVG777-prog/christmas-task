@@ -123,18 +123,6 @@ class View {
         target.checked = true;
       }
 
-      // const textCount = document.querySelectorAll('.select__count .select__text');
-      // console.log(textCount[0].textContent);
-      // console.log(textCount[1].textContent);
-      // console.log(Setting.filters.count[0]);
-      // console.log(Setting.filters.count[1]);
-      // console.log(Setting.filters.count);
-      // // let target = textCount
-      // textCount[0].textContent = String(Setting.filters.count[0]);
-      // textCount[1].textContent = String(Setting.filters.count[1]);
-
-      // console.log(textCount[0].textContent);
-      // console.log(textCount[1].textContent);
     }
 
     const forms = document.querySelectorAll('.select__form .form');
@@ -252,6 +240,12 @@ class View {
 
     if (container) {
       container.innerHTML = '';
+      if (data.length === 0) {
+        console.log('Извините, совпадений не обнаружено');
+        container.innerHTML = `
+        <div class="text-no-select-toys">Извините, совпадений не обнаружено</div>
+        `;
+      }
       data.forEach((el: DataToy) => {
         container.innerHTML += `
         <div class="select__card${Module.selected.includes(el.num) ? ' active' : ''}" data-num="${el.num}">

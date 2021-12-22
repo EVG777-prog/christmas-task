@@ -282,3 +282,12 @@
 .select__card.active {
     border: 5px solid red;
 }
+
+.text-no-select-toys {
+    position: relative;
+    top: 10%;
+    left: 10%;
+    font-size: 80px;
+    color: #ffffff;
+    text-align: center;
+}
