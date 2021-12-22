@@ -17,6 +17,12 @@ class View {
       console.log('START!');
       window.location.hash = '#select';
     });
+
+    if (Module.selected.length > 0) {
+      if (document.querySelector('.header__count-toys')) {
+        document.querySelector('.header__count-toys')!.textContent = String(Module.selected.length);
+      }
+    }
   }
 
   static renderSelectPage(): void {
@@ -212,7 +218,6 @@ class View {
         if (el.classList?.contains('select__card')) {
           const { num } = el.dataset;
 
-          // Module.selected.push(el.dataset);
           if (num) {
             if (Module.selected.includes(num)) {
               Module.selected.splice(Module.selected.indexOf(num), 1);
@@ -225,7 +230,7 @@ class View {
               setTimeout(() => {
                 document.querySelector('.error-message')?.classList.remove('active');
               }, 2000);
-              // alert('Все слоты заполнены');
+
             }
           }
           if (document.querySelector('.header__count-toys')) document.querySelector('.header__count-toys')!.textContent = String(Module.selected.length);

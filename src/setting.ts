@@ -1,3 +1,5 @@
+import { Module } from "./module";
+
 interface Filters {
   sort: 'name-up' | 'name-down' | 'count-up' | 'count-down',
   form: { 'ball': boolean, 'bell': boolean, 'cone': boolean, 'star': boolean, 'figure': boolean },
@@ -37,8 +39,23 @@ class Setting {
   static loadFilters(): void {
     const filters = localStorage.getItem('filters');
     if (filters) this.filters = JSON.parse(filters);
-
   }
+  static saveSelectedToys(): void {
+    localStorage.setItem('selectedToys', JSON.stringify(Module.selected));
+  }
+  static loadSelectedToys(): void {
+    const selectedToys = localStorage.getItem('selectedToys');
+    if (selectedToys) Module.selected = JSON.parse(selectedToys);
+  }
+  static saveAll(): void {
+    this.saveSelectedToys();
+    this.saveFilters();
+  }
+  static loadAll(): void {
+    this.loadSelectedToys();
+    this.loadFilters();
+  }
+
 }
 
 

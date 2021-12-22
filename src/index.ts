@@ -8,12 +8,13 @@ import { homePageHTML } from "./pages/home";
 
 const router = new Router();
 
+Setting.loadAll();
 View.renderHomePage();
 
-Setting.loadFilters();
+
 
 window.addEventListener('beforeunload', () => {
-  Setting.saveFilters();
+  Setting.saveAll();
 })
 
 document.querySelector('.header__search')?.addEventListener('input', (el) => {
