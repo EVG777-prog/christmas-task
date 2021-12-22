@@ -2,12 +2,19 @@ import { Module } from "./module";
 import { data } from "./data";
 import { Router } from "./router";
 import { View } from "./view";
+import { Setting } from "./setting";
 
 import { homePageHTML } from "./pages/home";
 
 const router = new Router();
 
 View.renderHomePage();
+
+Setting.loadFilters();
+
+window.addEventListener('beforeunload', () => {
+  Setting.saveFilters();
+})
 
 document.querySelector('.header__search')?.addEventListener('input', (el) => {
 

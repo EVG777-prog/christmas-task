@@ -31,6 +31,14 @@ class Setting {
   static resetFilters(): void {
     this.filters = this.filtersDefault;
   }
+  static saveFilters(): void {
+    localStorage.setItem('filters', JSON.stringify(this.filters));
+  }
+  static loadFilters(): void {
+    const filters = localStorage.getItem('filters');
+    if (filters) this.filters = JSON.parse(filters);
+
+  }
 }
 
 

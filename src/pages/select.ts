@@ -59,40 +59,7 @@ const selectPageHTML: string = `
 
 </div>
 <div class="container select__toys">
-    <div class="select__card">
-        <div class="select__card-name">Зеленый шар с цветами</div>
-        <div class="container">
-            <div class="select__card-img">
-                <img src="/assets/toys/1.png" alt="picture">
-            </div>
-            <div class="select__card-text">
-                <p>Количество: 5</p>
-                <p>Год покупки: 2000</p>
-                <p>Форма: шар</p>
-                <p>Цвет: зеленый</p>
-                <p>Размер: большой</p>
-                <p>Любимая: нет</p>
-            </div>
-
-        </div>
-    </div>
-    <div class="select__card active">
-        <div class="select__card-name">Зеленый шар с цветами</div>
-        <div class="container">
-            <div class="select__card-img">
-                <img src="/assets/toys/1.png" alt="picture">
-            </div>
-            <div class="select__card-text">
-                <p>Количество: 5</p>
-                <p>Год покупки: 2000</p>
-                <p>Форма: шар</p>
-                <p>Цвет: зеленый</p>
-                <p>Размер: большой</p>
-                <p>Любимая: нет</p>
-            </div>
-
-        </div>
-    </div>
+ 
 </div>
 </div>
 `;

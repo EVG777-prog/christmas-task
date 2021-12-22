@@ -28,7 +28,7 @@ class View {
 
     if (sliderCount) {
       noUiSlider.create(sliderCount, {
-        start: [1, 12],
+        start: [Setting.filters.count[0], Setting.filters.count[1]],
         step: 1,
         connect: true,
         range: {
@@ -50,7 +50,7 @@ class View {
     }
     if (sliderYear) {
       noUiSlider.create(sliderYear, {
-        start: [1940, 2020],
+        start: [Setting.filters.year[0], Setting.filters.year[1]],
         step: 1,
         connect: true,
         range: {
@@ -71,8 +71,73 @@ class View {
       }
     }
 
-    const forms = document.querySelectorAll('.select__form .form');
+    renderSelectPageFilters();
 
+    function renderSelectPageFilters(): void {
+
+      const chkbox = document.querySelector('#sort-metod') as HTMLElement & { value: string };
+      chkbox.value = Setting.filters.sort;
+
+      const forms = document.querySelectorAll('.select__form .form');
+      forms.forEach((el: Element) => {
+        const target = el as HTMLElement & { dataset: Record<string, string> };
+        const { form } = target.dataset;
+
+        if (form === 'ball' && Setting.filters.form['ball']) el.classList.add('active');
+        if (form === 'bell' && Setting.filters.form['bell']) el.classList.add('active');
+        if (form === 'cone' && Setting.filters.form['cone']) el.classList.add('active');
+        if (form === 'star' && Setting.filters.form['star']) el.classList.add('active');
+        if (form === 'figure' && Setting.filters.form['figure']) el.classList.add('active');
+
+      });
+
+      const colors = document.querySelectorAll('.select__color .color');
+      colors.forEach((el: Element) => {
+        const target = el as HTMLElement & { dataset: Record<string, string> };
+        const { color } = target.dataset;
+
+        if (color === 'white' && Setting.filters.color['white']) el.classList.add('active');
+        if (color === 'yellow' && Setting.filters.color['yellow']) el.classList.add('active');
+        if (color === 'red' && Setting.filters.color['red']) el.classList.add('active');
+        if (color === 'blue' && Setting.filters.color['blue']) el.classList.add('active');
+        if (color === 'green' && Setting.filters.color['green']) el.classList.add('active');
+
+      });
+
+      const sizes = document.querySelectorAll('.select__size .size');
+      sizes.forEach((el: Element) => {
+        const target = el as HTMLElement & { dataset: Record<string, string> };
+        const { size } = target.dataset;
+
+        if (size === 'big' && Setting.filters.size['big']) el.classList.add('active');
+        if (size === 'medium' && Setting.filters.size['medium']) el.classList.add('active');
+        if (size === 'small' && Setting.filters.size['small']) el.classList.add('active');
+
+      });
+
+      const favoriteX = document.querySelector('#chbx-favor');
+
+      if (favoriteX && Setting.filters.favorite) {
+        const target = favoriteX as HTMLElement & { checked: boolean }
+        console.dir(favoriteX);
+        target.checked = true;
+      }
+
+      // const textCount = document.querySelectorAll('.select__count .select__text');
+      // console.log(textCount[0].textContent);
+      // console.log(textCount[1].textContent);
+      // console.log(Setting.filters.count[0]);
+      // console.log(Setting.filters.count[1]);
+      // console.log(Setting.filters.count);
+      // // let target = textCount
+      // textCount[0].textContent = String(Setting.filters.count[0]);
+      // textCount[1].textContent = String(Setting.filters.count[1]);
+
+      // console.log(textCount[0].textContent);
+      // console.log(textCount[1].textContent);
+    }
+
+    const forms = document.querySelectorAll('.select__form .form');
     forms.forEach((el: Element) => {
 
       el.addEventListener('click', (ev: Event) => {
@@ -91,7 +156,6 @@ class View {
     });
 
     const colors = document.querySelectorAll('.select__color .color');
-
     colors.forEach((el: Element) => {
       // console.log(el);
       el.addEventListener('click', (ev: Event) => {
@@ -210,6 +274,10 @@ class View {
       });
     }
   }
+
+
 }
 
 export { View };
+
+
