@@ -221,8 +221,11 @@ class View {
               Module.selected.push(num);
               el.classList?.add('active');
             } else if (Module.selected.length >= 20) {
-
-              alert('Все слоты заполнены');
+              document.querySelector('.error-message')?.classList.add('active');
+              setTimeout(() => {
+                document.querySelector('.error-message')?.classList.remove('active');
+              }, 2000);
+              // alert('Все слоты заполнены');
             }
           }
           if (document.querySelector('.header__count-toys')) document.querySelector('.header__count-toys')!.textContent = String(Module.selected.length);
