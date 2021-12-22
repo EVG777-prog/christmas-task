@@ -211,7 +211,7 @@ class View {
       target.path.forEach((el) => {
         if (el.classList?.contains('select__card')) {
           const { num } = el.dataset;
-          console.log(num);
+
           // Module.selected.push(el.dataset);
           if (num) {
             if (Module.selected.includes(num)) {
@@ -220,18 +220,14 @@ class View {
             } else if (Module.selected.length <= 19) {
               Module.selected.push(num);
               el.classList?.add('active');
+            } else if (Module.selected.length >= 20) {
+
+              alert('Все слоты заполнены');
             }
           }
-
           if (document.querySelector('.header__count-toys')) document.querySelector('.header__count-toys')!.textContent = String(Module.selected.length);
-
-
         }
-
       })
-      console.log(Module.selected);
-
-      // Module.selected.push(+num);
     })
   }
 
