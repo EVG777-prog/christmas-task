@@ -2,14 +2,15 @@ const selectPageHTML: string = `
 <div class="container select">
 <div class="select__setting">
     <div class="container select__sort">
-        <p>Сортировка</p>
-        <select name="select__sort-metod" id="sort-metod">
-        <option value="name-up">По названию от "А" до "Я"</option>
-        <option value="name-down">По названию от "Я" до "А"</option>
-        <option value="count-up">По количеству по возрастанию</option>
-        <option value="count-down">По количеству по убыванию</option>
-    </select>
+         <p>Сортировка</p>
+         <select name="select__sort-metod" id="sort-metod">
+             <option value="name-up">По названию от "А" до "Я"</option>
+             <option value="name-down">По названию от "Я" до "А"</option>
+             <option value="count-up">По количеству по возрастанию</option>
+             <option value="count-down">По количеству по убыванию</option>
+         </select>
     </div>
+
     <div class="container select__form">
         <p>Форма:</p>
         <div class="form ball" data-form="ball"></div>
@@ -18,6 +19,7 @@ const selectPageHTML: string = `
         <div class="form star" data-form="star"></div>
         <div class="form figure" data-form="figure"></div>
     </div>
+
     <div class="container select__color">
         <p>Цвет:</p>
         <div class="color white" data-color="white"></div>
@@ -26,17 +28,20 @@ const selectPageHTML: string = `
         <div class="color blue" data-color="blue"></div>
         <div class="color green" data-color="green"></div>
     </div>
+
     <div class="container select__size">
         <p>Размер:</p>
         <div class="size big" data-size="big"></div>
         <div class="size medium" data-size="medium"></div>
         <div class="size small" data-size="small"></div>
     </div>
+
     <div class="container select__favorite">
         <p>Только любимые:</p>
         <input id="chbx-favor" class="checkbox-favorite" type="checkbox">
         <label for="chbx-favor"></label>
     </div>
+
     <div class="container select__count">
         <p>Количество экземпляров:</p>
         <div class="container select__count-line">
@@ -53,9 +58,12 @@ const selectPageHTML: string = `
             <div id="range-year" class="select__range range-year"></div>
             <div class="select__text end">2020</div>
         </div>
-
     </div>
-    <div class="container select__reset">Сброс фильтров</div>
+
+    <div class="container select__reset-btns">
+        <div class="container select__reset reset-filters">Сброс фильтров</div>
+        <div class="container select__reset reset-ls">Сброс Local Storage</div>
+    </div>
 
 </div>
 <div class="container select__toys">

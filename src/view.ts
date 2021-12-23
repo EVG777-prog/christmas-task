@@ -194,11 +194,24 @@ class View {
       });
     };
 
-    document.querySelector('.select__reset')?.addEventListener('click', (el) => {
+    document.querySelector('.select__reset.reset-filters')?.addEventListener('click', (el) => {
+      console.log('Reset filters!');
       const sort = Setting.filters.sort;
-      Setting.filters = Setting.filtersDefault;
+      Setting.filters = JSON.parse(JSON.stringify(Setting.filtersDefault));
       Setting.filters.sort = sort;
       View.renderSelectPage();
+    })
+    document.querySelector('.select__reset.reset-ls')?.addEventListener('click', (el) => {
+      console.log('Reset Local Storage!');
+
+      localStorage.clear();
+      Module.selected = [];
+      Setting.filters = JSON.parse(JSON.stringify(Setting.filtersDefault));
+      if (document.querySelector('.header__count-toys')) {
+        document.querySelector('.header__count-toys')!.textContent = String(Module.selected.length);
+      }
+      View.renderSelectPage();
+
     })
 
     document.querySelector('#sort-metod')?.addEventListener('change', (el) => {
