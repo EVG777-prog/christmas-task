@@ -1,4 +1,5 @@
 import { homePageHTML } from "./pages/home";
+import { treePageHTML } from "./pages/tree";
 import { selectPageHTML } from "./pages/select";
 import { Setting } from "./setting";
 import { data, DataToy } from "./data";
@@ -23,6 +24,65 @@ class View {
         document.querySelector('.header__count-toys')!.textContent = String(Module.selected.length);
       }
     }
+  }
+
+  static renderTreePage(): void {
+    const main: HTMLElement | null = document.querySelector('main');
+    if (main) main.innerHTML = treePageHTML;
+
+    // заполняем отобранными игрушками
+    if (Module.selected.length > 0) {
+      const treeToys: HTMLElement | null = document.querySelector('.tree__toys-selected');
+      if (treeToys) treeToys.innerHTML = '';
+      Module.selected.forEach((el) => {
+        console.log(el);
+        if (treeToys) treeToys.innerHTML += `
+        <div class="toy-selected">
+            <img src="../assets/toys/${el}.png" alt="pict">
+        </div>
+        `;
+      })
+    }
+
+    // вешаем слушатели на выбор елки
+    const selectTrees: NodeListOf<Element> | null = document.querySelectorAll('.tree__select-tree .tree-example');
+    if (selectTrees) {
+      selectTrees.forEach((el) => {
+        el.addEventListener('click', (el2) => {
+          console.log(el2);
+          const target = el2.target as HTMLElement & { dataset: Record<string, string> };
+          const { tree } = target.dataset;
+
+          if (document.querySelector('.tree__picture')) document.querySelector('.tree__picture')!.innerHTML = `
+          <img src="../assets/tree/${tree}.png" alt="Tree">
+          `;
+        })
+
+      })
+    }
+    // вешаем слушатели на выбор фона
+    const selectBG: NodeListOf<Element> | null = document.querySelectorAll('.tree__select-bg .bg');
+    if (selectBG) {
+      selectBG.forEach((el) => {
+        el.addEventListener('click', (el2) => {
+          console.log(el2);
+          const target = el2.target as HTMLElement & { dataset: Record<string, string> };
+          const { bg } = target.dataset;
+          console.log(bg);
+
+
+          const target2 = document.querySelector('.tree__picture') as HTMLElement & { style: CSSStyleDeclaration };
+          console.dir(target2);
+          console.dir(target2.style.backgroundImage);
+          target2.style.backgroundImage = `url("../assets/bg/${bg}.jpg")`;
+          console.dir(target2.style.backgroundImage);
+        })
+
+      })
+    }
+
+
+
   }
 
   static renderSelectPage(): void {

@@ -20,7 +20,7 @@ class Router {
         break;
       case '#tree':
         // console.log('It is TREE!');
-        View.renderHomePage();
+        View.renderTreePage();
         break;
     }
 
