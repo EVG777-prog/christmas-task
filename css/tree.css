@@ -31,6 +31,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    position: relative;
 }
 
 .tree__toys {
@@ -188,7 +189,7 @@
     background-color: green;
 }
 
-.tree__picture img {
+#tree-picture {
     margin-left: auto;
     margin-right: auto;
     height: 100%;
@@ -207,6 +208,7 @@
     align-items: center;
     background-color: rgb(206, 206, 206);
     opacity: 0.8;
+    position: relative;
 }
 
 .toy-selected img {
@@ -215,4 +217,28 @@
     margin-left: auto;
     margin-right: auto;
     opacity: 1;
+}
+
+.toy-selected__count {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    font-size: 20px;
+    text-align: center;
+    color: #2b1de8;
+    width: 30px;
+    height: 30px;
+    border: 1px solid blue;
+    border-radius: 20px;
+    background-color: #1ddde8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.toy-on-tree {
+    position: absolute;
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
 }

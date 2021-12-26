@@ -30,18 +30,54 @@ class View {
     const main: HTMLElement | null = document.querySelector('main');
     if (main) main.innerHTML = treePageHTML;
 
-    // заполняем отобранными игрушками
-    if (Module.selected.length > 0) {
+    renderSelectedToys();
+    function renderSelectedToys(): void {
+      // заполняем отобранными игрушками
       const treeToys: HTMLElement | null = document.querySelector('.tree__toys-selected');
       if (treeToys) treeToys.innerHTML = '';
-      Module.selected.forEach((el) => {
-        console.log(el);
-        if (treeToys) treeToys.innerHTML += `
+      if (Module.selected.length > 0) {
+        Module.selected.forEach((el) => {
+          if (treeToys) treeToys.innerHTML += `
         <div class="toy-selected">
-            <img src="../assets/toys/${el}.png" alt="pict">
+            <img src="../assets/toys/${el}.png" alt="pict" draggable="true" data-num="${el}">
+            <div class="toy-selected__count">${data[+el - 1].count}</div>
         </div>
         `;
-      })
+        });
+      } else {
+        for (let i = 0; i < 20; i++) {
+          if (treeToys) treeToys.innerHTML += `
+        <div class="toy-selected">
+            <img src="../assets/toys/${i + 1}.png" alt="pict" draggable="true" data-num="${i + 1}">
+            <div class="toy-selected__count">${data[i].count}</div>
+        </div>
+        `;
+        }
+      }
+    }
+
+    // отслеживаем начало перемещения (drag) игрушек на елку
+    drag();
+    function drag(): void {
+      const toys = document.querySelectorAll('.toy-selected img');
+
+      if (toys) {
+        toys.forEach((el) => {
+          el.addEventListener('dragstart', (el2) => {
+            console.log('Начало перемещения')
+            console.log(el2);
+            const item = el2 as DragEvent;
+            const target = el2.target as EventTarget & { dataset: Record<string, string> };
+            const { num } = target.dataset;
+            if (item.dataTransfer) item.dataTransfer.setData('id', num);
+            if (item.dataTransfer) item.dataTransfer.setData('out', 'true');
+            if (item.dataTransfer) item.dataTransfer.setData('offsetX', String(item.offsetX));
+            if (item.dataTransfer) item.dataTransfer.setData('offsetY', String(item.offsetY));
+          });
+        })
+      }
+
+
     }
 
     // вешаем слушатели на выбор елки
@@ -52,38 +88,126 @@ class View {
           console.log(el2);
           const target = el2.target as HTMLElement & { dataset: Record<string, string> };
           const { tree } = target.dataset;
+          Module.currentTreeSection.tree = tree;
+          // if (document.querySelector('.tree__picture')) document.querySelector('.tree__picture')!.innerHTML = `
+          // <img src="../assets/tree/${tree}.png" alt="Tree">
+          // `;
 
-          if (document.querySelector('.tree__picture')) document.querySelector('.tree__picture')!.innerHTML = `
-          <img src="../assets/tree/${tree}.png" alt="Tree">
-          `;
-        })
-
-      })
+          renderTreeSection();
+        });
+      });
     }
     // вешаем слушатели на выбор фона
     const selectBG: NodeListOf<Element> | null = document.querySelectorAll('.tree__select-bg .bg');
     if (selectBG) {
       selectBG.forEach((el) => {
         el.addEventListener('click', (el2) => {
-          console.log(el2);
           const target = el2.target as HTMLElement & { dataset: Record<string, string> };
           const { bg } = target.dataset;
-          console.log(bg);
-
-
-          const target2 = document.querySelector('.tree__picture') as HTMLElement & { style: CSSStyleDeclaration };
-          console.dir(target2);
-          console.dir(target2.style.backgroundImage);
-          target2.style.backgroundImage = `url("../assets/bg/${bg}.jpg")`;
-          console.dir(target2.style.backgroundImage);
-        })
-
-      })
+          Module.currentTreeSection.bgImage = bg;
+          renderTreeSection();
+          // const target2 = document.querySelector('.tree__picture') as HTMLElement & { style: CSSStyleDeclaration };
+          // target2.style.backgroundImage = `url("../assets/bg/${bg}.jpg")`;
+        });
+      });
     }
 
+    // рендер секции с елкой, которую наряжаем
+    renderTreeSection();
+    function renderTreeSection(): void {
+      // отображаем фон
+      console.log('Render background');
+      const treeContainer = document.querySelector('.tree__picture') as HTMLElement & { style: CSSStyleDeclaration };
+      treeContainer.style.backgroundImage = `url("../assets/bg/${Module.currentTreeSection.bgImage}.jpg")`;
+
+      // отображаем елку
+      console.log('Render tree');
+      if (treeContainer) treeContainer.innerHTML = `
+      <img id="tree-picture" src="../assets/tree/${Module.currentTreeSection.tree}.png" alt="Tree">
+      <div class="tree__toys-on"></div>
+      `;
+
+      // отображаем игрушки
+      if (Module.currentTreeSection.toys.length > 0) {
+        const toyOn = document.querySelector('.tree__toys-on');
+        // console.log('Render toys');
+        if (toyOn) toyOn.innerHTML = '';
+        Module.currentTreeSection.toys.forEach((el, i) => {
+          // console.log(`Render ${el.numberToy}`);
+          toyOn!.innerHTML += `
+            <img class="toy-on-tree" src="../assets/toys/${el.numberToy}.png" data-num="${el.numberToy}" data-numi="${i}" alt="pict" draggable="true" style="top: ${el.position[1]}px; left: ${el.position[0]}px;">
+            `;
+        });
+      }
+
+      // отслеживаем "бросания" (drop) на елку
+      const tree = document.querySelector('#tree-picture');
+      if (tree) tree.addEventListener('dragover', (ev) => {
+        ev.preventDefault()
+      })
+      if (tree) tree.addEventListener('drop', (el) => {
+        const target = el as DragEvent & { layerX: string, layerY: string };
+        console.log(target);
+        const outToy = target.dataTransfer?.getData('out');
+        console.log(`Игрушка внешняя`, outToy);
+
+        if (outToy == 'true') {
+          Module.currentTreeSection.toys.push({
+            numberToy: `${target.dataTransfer?.getData('id')}`,
+            position: [+`${target.layerX}` - +target.dataTransfer!.getData('offsetX'), +`${target.layerY}` - +target.dataTransfer!.getData('offsetY')]
+          });
+        } else if (outToy == 'false') {
+
+          console.log(`Индекс игрушки в массиве: ${target.dataTransfer?.getData('id')!}`);
+          Module.currentTreeSection.toys[+target.dataTransfer?.getData('id')!].position = [+`${target.layerX}` - +target.dataTransfer!.getData('offsetX'), +`${target.layerY}` - +target.dataTransfer!.getData('offsetY')];
+        }
 
 
+        console.log("Текущее дерево:");
+        console.log(Module.currentTreeSection);
+
+        renderTreeSection();
+      });
+
+      // отслеживаем начало перемещения игрушек с елки
+      dragToy();
+      function dragToy(): void {
+        const toys = document.querySelectorAll('.toy-on-tree');
+        if (toys) {
+          toys.forEach((el) => {
+            el.addEventListener('dragstart', (el2) => {
+              console.log('Начало перемещения игрушки с елки')
+              console.log(el2);
+              const item = el2 as DragEvent;
+              const target = el2.target as EventTarget & { dataset: Record<string, string> };
+              const { numi } = target.dataset;
+              console.log(numi);
+              console.log(target);
+              if (item.dataTransfer) item.dataTransfer.setData('id', numi);
+              if (item.dataTransfer) item.dataTransfer.setData('out', 'false');
+              if (item.dataTransfer) item.dataTransfer.setData('offsetX', String(item.offsetX));
+              if (item.dataTransfer) item.dataTransfer.setData('offsetY', String(item.offsetY));
+              el.addEventListener('dragend', (el3) => {
+                console.log('Перемещение окончено!');
+                const target = el3 as DragEvent;
+                console.log(target.dataTransfer?.dropEffect);
+                if (target.dataTransfer?.dropEffect == 'none') {
+                  console.log('Delete element');
+                  Module.currentTreeSection.toys.splice(+numi, 1);
+                  renderTreeSection();
+                }
+              })
+            });
+          })
+        }
+      }
+
+
+
+
+    }
   }
+
 
   static renderSelectPage(): void {
     const main: HTMLElement | null = document.querySelector('main');

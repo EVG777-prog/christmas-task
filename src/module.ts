@@ -2,8 +2,28 @@ import { Setting } from "./setting";
 
 import { data, DataToy } from "./data";
 
+interface ToyPosition {
+  numberToy: string,
+  position: [number, number]
+}
+interface TreeSection {
+  bgImage: string,
+  tree: string,
+  toys: ToyPosition[];
+}
+
 class Module {
   static selected: string[] = [];
+  static currentTreeSection: TreeSection = {
+    bgImage: '5',
+    tree: '5',
+    toys: [
+      //   {
+      //   numberToy: '5',
+      //   position: [200, 200]
+      // }
+    ],
+  };
   data: Array<DataToy>;
 
   constructor(data: Array<DataToy>) {

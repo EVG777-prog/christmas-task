@@ -33,34 +33,22 @@ const treePageHTML: string = `
         <input type="checkbox">
     </div>
 </div>
-<div class="container tree__picture" style="background-image: url('../assets/bg/8.jpg')">
-    <img src="../assets/tree/1.png" alt="Tree">
+<div class="main-tree-container">
+        
 </div>
+
+<div class="container tree__picture">
+<!-- <map name="tree-map">
+<area shape="poly" coords="365,699,189,706,113,683,31,608,2,555,2,539,18,437,73,351,106,224,161,134,243,-1,306,75,353,144,399,221,424,359,452,459,496,550,444,664">
+</map> -->
+    <img id="tree-picture" src="assets/tree/3.png" class="main-tree" usemap="#tree-map" alt="tree">   
+    <div class="tree__toys-on"></div>
+</div>
+
 <div class="container tree__toys">
     <div class="tree__select-tree_text">Игрушки</div>
     <div class="tree__toys-selected">
-        <div class="toy-selected num1">
-          <img src="../assets/toys/15.png" alt="pict">
-        </div>
-        <div class="toy-selected num2"></div>
-        <div class="toy-selected num3"></div>
-        <div class="toy-selected num4"></div>
-        <div class="toy-selected num5"></div>
-        <div class="toy-selected num6"></div>
-        <div class="toy-selected num7"></div>
-        <div class="toy-selected num8"></div>
-        <div class="toy-selected num9"></div>
-        <div class="toy-selected num10"></div>
-        <div class="toy-selected num11"></div>
-        <div class="toy-selected num12"></div>
-        <div class="toy-selected num13"></div>
-        <div class="toy-selected num14"></div>
-        <div class="toy-selected num15"></div>
-        <div class="toy-selected num16"></div>
-        <div class="toy-selected num17"></div>
-        <div class="toy-selected num18"></div>
-        <div class="toy-selected num19"></div>
-        <div class="toy-selected num20"></div>
+        
     </div>
     <div class="tree__select-tree_text">Вы нарядили</div>
     <div class="tree__decorate">
