@@ -11,6 +11,8 @@ interface Filters {
 }
 
 class Setting {
+  static reset = false;
+
   static filters: Filters = {
     sort: 'name-up',
     form: { 'ball': false, 'bell': false, 'cone': false, 'star': false, 'figure': false },
@@ -20,6 +22,7 @@ class Setting {
     count: [1, 12],
     year: [1940, 2020],
   }
+
   static filtersDefault: Filters = {
     sort: 'name-up',
     form: { 'ball': false, 'bell': false, 'cone': false, 'star': false, 'figure': false },
@@ -47,13 +50,37 @@ class Setting {
     const selectedToys = localStorage.getItem('selectedToys');
     if (selectedToys) Module.selected = JSON.parse(selectedToys);
   }
+  static saveData(): void {
+    localStorage.setItem('data', JSON.stringify(Module.data));
+  }
+  static loadData(): void {
+    const data = localStorage.getItem('data');
+    if (data) Module.data = JSON.parse(data);
+  }
+  static saveCurrentTree(): void {
+    localStorage.setItem('currentTree', JSON.stringify(Module.currentTreeSection));
+  }
+  static loadCurrentTree(): void {
+    const tree = localStorage.getItem('currentTree');
+    if (tree) Module.currentTreeSection = JSON.parse(tree);
+  }
   static saveAll(): void {
     this.saveSelectedToys();
     this.saveFilters();
+    this.saveData();
+    this.saveCurrentTree();
   }
   static loadAll(): void {
     this.loadSelectedToys();
     this.loadFilters();
+    this.loadData();
+    this.loadCurrentTree();
+  }
+
+  static resetAll(): void {
+    localStorage.clear();
+    Setting.reset = true;
+    location.reload();
   }
 
 }

@@ -17,18 +17,9 @@ class Module {
   static currentTreeSection: TreeSection = {
     bgImage: '5',
     tree: '5',
-    toys: [
-      //   {
-      //   numberToy: '5',
-      //   position: [200, 200]
-      // }
-    ],
+    toys: [],
   };
-  data: Array<DataToy>;
-
-  constructor(data: Array<DataToy>) {
-    this.data = data;
-  }
+  static data: Array<DataToy> = data;
 
   static filterAll(): Array<DataToy> {
     let result: DataToy[] = data;

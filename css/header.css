@@ -68,6 +68,7 @@
 }
 
 .header__setting {
+    display: none;
     background-image: url("../assets/setting.png");
     background-size: contain;
     background-repeat: no-repeat;
@@ -77,6 +78,19 @@
 }
 
 .header__setting:hover {
+    opacity: 0.5;
+}
+
+.header__volume {
+    background-image: url("../assets/svg/mute.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    width: 45px;
+    height: 45px;
+}
+
+.header__volume:hover {
     opacity: 0.5;
 }
 
@@ -102,4 +116,18 @@
 .error-message__text {
     font-size: 30px;
     color: #ff0000;
+}
+
+.header__reset {
+    width: 100px;
+    height: 50px;
+    border: 3px solid black;
+    border-radius: 10px;
+    background-color: aqua;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
 }

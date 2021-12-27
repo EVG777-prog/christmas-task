@@ -2,7 +2,7 @@ import { homePageHTML } from "./pages/home";
 import { treePageHTML } from "./pages/tree";
 import { selectPageHTML } from "./pages/select";
 import { Setting } from "./setting";
-import { data, DataToy } from "./data";
+import { DataToy } from "./data";
 import { Module } from "./module";
 
 import * as noUiSlider from 'nouislider';
@@ -15,15 +15,8 @@ class View {
     if (main) main.innerHTML = homePageHTML;
 
     document.querySelector('.home-page__btn-start')?.addEventListener('click', (el) => {
-      console.log('START!');
       window.location.hash = '#select';
     });
-
-    if (Module.selected.length > 0) {
-      if (document.querySelector('.header__count-toys')) {
-        document.querySelector('.header__count-toys')!.textContent = String(Module.selected.length);
-      }
-    }
   }
 
   static renderTreePage(): void {
@@ -40,7 +33,7 @@ class View {
           if (treeToys) treeToys.innerHTML += `
         <div class="toy-selected">
             <img src="../assets/toys/${el}.png" alt="pict" draggable="true" data-num="${el}">
-            <div class="toy-selected__count">${data[+el - 1].count}</div>
+            <div class="toy-selected__count">${Module.data[+el - 1].count}</div>
         </div>
         `;
         });
@@ -49,7 +42,7 @@ class View {
           if (treeToys) treeToys.innerHTML += `
         <div class="toy-selected">
             <img src="../assets/toys/${i + 1}.png" alt="pict" draggable="true" data-num="${i + 1}">
-            <div class="toy-selected__count">${data[i].count}</div>
+            <div class="toy-selected__count">${Module.data[i].count}</div>
         </div>
         `;
         }
@@ -64,8 +57,6 @@ class View {
       if (toys) {
         toys.forEach((el) => {
           el.addEventListener('dragstart', (el2) => {
-            console.log('Начало перемещения')
-            console.log(el2);
             const item = el2 as DragEvent;
             const target = el2.target as EventTarget & { dataset: Record<string, string> };
             const { num } = target.dataset;
@@ -85,7 +76,6 @@ class View {
     if (selectTrees) {
       selectTrees.forEach((el) => {
         el.addEventListener('click', (el2) => {
-          console.log(el2);
           const target = el2.target as HTMLElement & { dataset: Record<string, string> };
           const { tree } = target.dataset;
           Module.currentTreeSection.tree = tree;
@@ -116,12 +106,10 @@ class View {
     renderTreeSection();
     function renderTreeSection(): void {
       // отображаем фон
-      console.log('Render background');
       const treeContainer = document.querySelector('.tree__picture') as HTMLElement & { style: CSSStyleDeclaration };
       treeContainer.style.backgroundImage = `url("../assets/bg/${Module.currentTreeSection.bgImage}.jpg")`;
 
       // отображаем елку
-      console.log('Render tree');
       if (treeContainer) treeContainer.innerHTML = `
       <img id="tree-picture" src="../assets/tree/${Module.currentTreeSection.tree}.png" alt="Tree">
       <div class="tree__toys-on"></div>
@@ -130,10 +118,10 @@ class View {
       // отображаем игрушки
       if (Module.currentTreeSection.toys.length > 0) {
         const toyOn = document.querySelector('.tree__toys-on');
-        // console.log('Render toys');
+
         if (toyOn) toyOn.innerHTML = '';
         Module.currentTreeSection.toys.forEach((el, i) => {
-          // console.log(`Render ${el.numberToy}`);
+
           toyOn!.innerHTML += `
             <img class="toy-on-tree" src="../assets/toys/${el.numberToy}.png" data-num="${el.numberToy}" data-numi="${i}" alt="pict" draggable="true" style="top: ${el.position[1]}px; left: ${el.position[0]}px;">
             `;
@@ -147,26 +135,23 @@ class View {
       })
       if (tree) tree.addEventListener('drop', (el) => {
         const target = el as DragEvent & { layerX: string, layerY: string };
-        console.log(target);
         const outToy = target.dataTransfer?.getData('out');
-        console.log(`Игрушка внешняя`, outToy);
 
         if (outToy == 'true') {
-          Module.currentTreeSection.toys.push({
-            numberToy: `${target.dataTransfer?.getData('id')}`,
-            position: [+`${target.layerX}` - +target.dataTransfer!.getData('offsetX'), +`${target.layerY}` - +target.dataTransfer!.getData('offsetY')]
-          });
-        } else if (outToy == 'false') {
+          const id: string | undefined = target.dataTransfer?.getData('id');
+          if (id && +Module.data[+id - 1].count > 0) {
+            Module.currentTreeSection.toys.push({
+              numberToy: `${target.dataTransfer?.getData('id')}`,
+              position: [+`${target.layerX}` - +target.dataTransfer!.getData('offsetX'), +`${target.layerY}` - +target.dataTransfer!.getData('offsetY')]
+            });
+            const oldCount: number = (+Module.data[+id - 1].count);
+            Module.data[+id - 1].count = String(oldCount - 1);
 
-          console.log(`Индекс игрушки в массиве: ${target.dataTransfer?.getData('id')!}`);
+          }
+        } else if (outToy == 'false') {
           Module.currentTreeSection.toys[+target.dataTransfer?.getData('id')!].position = [+`${target.layerX}` - +target.dataTransfer!.getData('offsetX'), +`${target.layerY}` - +target.dataTransfer!.getData('offsetY')];
         }
-
-
-        console.log("Текущее дерево:");
-        console.log(Module.currentTreeSection);
-
-        renderTreeSection();
+        View.renderTreePage();
       });
 
       // отслеживаем начало перемещения игрушек с елки
@@ -176,25 +161,21 @@ class View {
         if (toys) {
           toys.forEach((el) => {
             el.addEventListener('dragstart', (el2) => {
-              console.log('Начало перемещения игрушки с елки')
-              console.log(el2);
               const item = el2 as DragEvent;
               const target = el2.target as EventTarget & { dataset: Record<string, string> };
               const { numi } = target.dataset;
-              console.log(numi);
-              console.log(target);
+
               if (item.dataTransfer) item.dataTransfer.setData('id', numi);
               if (item.dataTransfer) item.dataTransfer.setData('out', 'false');
               if (item.dataTransfer) item.dataTransfer.setData('offsetX', String(item.offsetX));
               if (item.dataTransfer) item.dataTransfer.setData('offsetY', String(item.offsetY));
               el.addEventListener('dragend', (el3) => {
-                console.log('Перемещение окончено!');
                 const target = el3 as DragEvent;
-                console.log(target.dataTransfer?.dropEffect);
                 if (target.dataTransfer?.dropEffect == 'none') {
-                  console.log('Delete element');
+                  const numToy: number = +Module.currentTreeSection.toys[+numi].numberToy;
+                  Module.data[numToy - 1].count = String(+Module.data[numToy - 1].count + 1);
                   Module.currentTreeSection.toys.splice(+numi, 1);
-                  renderTreeSection();
+                  View.renderTreePage();
                 }
               })
             });
@@ -309,7 +290,6 @@ class View {
 
       if (favoriteX && Setting.filters.favorite) {
         const target = favoriteX as HTMLElement & { checked: boolean }
-        console.dir(favoriteX);
         target.checked = true;
       }
 
@@ -335,9 +315,7 @@ class View {
 
     const colors = document.querySelectorAll('.select__color .color');
     colors.forEach((el: Element) => {
-      // console.log(el);
       el.addEventListener('click', (ev: Event) => {
-
         const target = ev.target as HTMLElement & { dataset: Record<string, string> };
         const { color } = target.dataset;
         target.classList.toggle('active');
@@ -354,9 +332,7 @@ class View {
     const sizes = document.querySelectorAll('.select__size .size');
 
     sizes.forEach((el: Element) => {
-      // console.log(el);
       el.addEventListener('click', (ev: Event) => {
-
         const target = ev.target as HTMLElement & { dataset: Record<string, string> };
         const { size } = target.dataset;
         target.classList.toggle('active');
@@ -379,15 +355,12 @@ class View {
     };
 
     document.querySelector('.select__reset.reset-filters')?.addEventListener('click', (el) => {
-      console.log('Reset filters!');
       const sort = Setting.filters.sort;
       Setting.filters = JSON.parse(JSON.stringify(Setting.filtersDefault));
       Setting.filters.sort = sort;
       View.renderSelectPage();
     })
     document.querySelector('.select__reset.reset-ls')?.addEventListener('click', (el) => {
-      console.log('Reset Local Storage!');
-
       localStorage.clear();
       Module.selected = [];
       Setting.filters = JSON.parse(JSON.stringify(Setting.filtersDefault));
@@ -399,9 +372,7 @@ class View {
     })
 
     document.querySelector('#sort-metod')?.addEventListener('change', (el) => {
-
       const target = el.target as HTMLElement & { value: "name-up" | "name-down" | "count-up" | "count-down" };
-      console.log(target.value);
       Setting.filters.sort = target.value;
       this.showToys(Module.filterAll());
     })
@@ -442,7 +413,6 @@ class View {
     if (container) {
       container.innerHTML = '';
       if (data.length === 0) {
-        console.log('Извините, совпадений не обнаружено');
         container.innerHTML = `
         <div class="text-no-select-toys">Извините, совпадений не обнаружено</div>
         `;
