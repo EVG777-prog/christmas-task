@@ -1,4 +1,4 @@
-const data: Array<DataToy> = [{
+const dataAll: Array<DataToy> = [{
   num: '1',
   name: 'Большой шар с рисунком',
   count: '2',
@@ -611,4 +611,4 @@ interface DataToy {
   favorite: boolean,
 }
 
-export { data, DataToy };
+export { dataAll, DataToy };

@@ -38,7 +38,6 @@ function playAudio(): void {
 }
 
 window.addEventListener('beforeunload', () => {
-  console.log(Setting.reset);
   if (!Setting.reset) {
     Setting.saveAll();
   }

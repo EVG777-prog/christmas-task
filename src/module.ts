@@ -1,6 +1,6 @@
 import { Setting } from "./setting";
 
-import { data, DataToy } from "./data";
+import { dataAll, DataToy } from "./data";
 
 interface ToyPosition {
   numberToy: string,
@@ -19,10 +19,10 @@ class Module {
     tree: '5',
     toys: [],
   };
-  static data: Array<DataToy> = data;
+  static data: Array<DataToy> = dataAll;
 
   static filterAll(): Array<DataToy> {
-    let result: DataToy[] = data;
+    let result: DataToy[] = Module.data;
 
     result = this.filterCount(result, Setting.filters.count);
     result = this.filterYear(result, Setting.filters.year);
